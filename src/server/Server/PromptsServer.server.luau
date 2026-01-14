@@ -1,8 +1,11 @@
 --Services
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local CollectionService = game:GetService("CollectionService")
 
 --Folders
-local promptWallsFolder = workspace.PromptWalls
+local stagesFolder = workspace:WaitForChild("Stages")
+local easyStage = stagesFolder:WaitForChild("EasyStage")
+local promptWallsFolder = easyStage:WaitForChild("PromptWalls")
 local remotesFolder = ReplicatedStorage.Remotes
 local modulesFolder = ReplicatedStorage:WaitForChild("Modules")
 
@@ -13,69 +16,71 @@ local easyLists = require(modulesFolder:WaitForChild("EasyLists"))
 local stageTypes = require(modulesFolder:WaitForChild("StageTypes"))
 local types = stageTypes.Stages
 
-
 --Parts
 local startWall = promptWallsFolder:WaitForChild("StartWall")
 local endWall = promptWallsFolder:WaitForChild("EndWall")
-
---Gui
-local startPrompt = startWall:WaitForChild("ProximityPrompt")
-local endPrompt = endWall:WaitForChild("ProximityPrompt")
+local startWalls = CollectionService:GetTagged("StartWalls")
+local endWalls = CollectionService:GetTagged("EndWalls")
 
 
-startPrompt.Triggered:Connect(function(player)
-	local character = player.Character
-	if not character then 
-		return 
-	end 
-	
-	local stageType = player:WaitForChild("StageType")
-	stageType.Value = startWall.StageType.Value
-	local rootPart = character:FindFirstChild("HumanoidRootPart")
-	if not rootPart then 
-		return 
-	end
+local startPrompts = {}
+local endPrompts = {}
 
-	startedLevel:FireClient(player)
-	rootPart.Position = Vector3.new(1.801, 4.02, -41.453)
-end)
-
-endPrompt.Triggered:Connect(function(player)
-	local character = player.Character
-
-	if not character then
-		return 
-	end
-
-	local stageType = player:WaitForChild("StageType")
-	local stageName = player:WaitForChild("StageName")
-	
-	local typeName = types[stageType.Value]
-	
-	
-	local list = require(modulesFolder[typeName])
-	local words = list.ListNames
-	for i, word in pairs(words) do
-		if word == stageName.Value then
-			stageName.Value = words[i+1]
-			break
+for i, wall in ipairs(startWalls) do
+	local prompt = wall:WaitForChild("ProximityPrompt")
+	prompt.Triggered:Connect(function(player)
+		local character = player.Character
+		if not character then 
+			return 
+		end 
+		
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+		if not hrp then 
+			return 
 		end
-	end
-	
+		
+		local stageType = player:WaitForChild("StageType")
+		stageType.Value = wall.StageType.Value
+		local targetPos = wall.Position + -wall.CFrame.LookVector * 10
+		hrp.Position = targetPos
+		startedLevel:FireClient(player) --WordChainClient
+	end)
+end
 
-	stageType.Value = 0
-	
-	local rootPart = character:FindFirstChild("HumanoidRootPart")
-	if not rootPart then
-		return 
-	end
-	
-	finishedLevel:FireClient(player)
-	rootPart.Position = workspace.SpawnLocation.Position + Vector3.new(0, 5, 0)
-end)
+for i, wall in ipairs(endWalls) do
+	local prompt = wall:WaitForChild("ProximityPrompt")
+	prompt.Triggered:Connect(function(player)
+		local character = player.Character
+		if not character then
+			return
+		end
+		
+		local hrp = character:FindFirstChild("HumanoidRootPart")
+		if not hrp then
+			return
+		end
+		
+		local stageType = player:WaitForChild("StageType")
+		local stageName = player:WaitForChild("StageName")
+		local typeName = types[stageType.Value]
+		
+		local list = require(modulesFolder[typeName])
+		local words = list.ListNames
+		for i, word in pairs(words) do 
+			if word == stageName.Value then
+				stageName.Value = words[i+1]
+				break
+			end
+		end
+		
+		
+		local leaderstats = player:WaitForChild("leaderstats")
+		local level = leaderstats:WaitForChild("Level")
+		level.Value += 1
 
-
-
-
-
+		stageType.Value = 0
+		finishedLevel:FireClient(player) --WordChainClient
+		hrp.Position = workspace.SpawnLocation.Position + Vector3.new(0, 5, 0)
+	end)
+end
 
