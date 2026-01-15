@@ -1,3 +1,9 @@
+--[[
+    Background Music Handler (Client)
+    - Cycles through background music tracks without repeats until all are played
+    - Handles muting/unmuting via a GUI button
+]]
+
 -- Services
 local Players = game:GetService("Players")
 local SoundService = game:GetService("SoundService")
@@ -8,21 +14,23 @@ local backgroundMusicFolder = SoundService:WaitForChild("BackgroundMusic")
 -- Songs (array of Sound objects)
 local songs = backgroundMusicFolder:GetChildren()
 
--- Gui
+-- GUI
 local player = Players.LocalPlayer
-local PlayerGui = player:WaitForChild("PlayerGui")
-local mainGui = PlayerGui:WaitForChild("MainGui")
+local playerGui = player:WaitForChild("PlayerGui")
+local mainGui = playerGui:WaitForChild("MainGui")
 
--- Other
+-- Mute button and state
 local muteButton = mainGui:WaitForChild("MuteButton")
 local muted = muteButton:WaitForChild("Muted")
 
+-- Playback state
 local currentSong
 local playedSongs = {}
-local endedConnection -- to disconnect when switching songs
+local endedConnection -- connection to current song's Ended event
 
+-- Plays the next song, cycling when the list is exhausted
 local function playSong()
-	-- stop old song and disconnect its Ended handler
+	-- Stop old song and disconnect its Ended handler
 	if currentSong then
 		currentSong:Stop()
 		if endedConnection then
@@ -31,25 +39,26 @@ local function playSong()
 		end
 	end
 
-	-- if no songs left, refill from playedSongs
+	-- If no songs left, refill from playedSongs
 	if #songs == 0 then
 		for i, song in ipairs(playedSongs) do
 			songs[i] = song
 		end
-		table.clear(playedSongs) -- or: playedSongs = {}
+		table.clear(playedSongs) -- reuse the same table
 	end
 
-	-- still nothing? then just return
+	-- Still nothing? Then just return (no tracks in folder)
 	if #songs == 0 then
 		return
 	end
 
-	-- pick first song in list
+	-- Pick first song in list
 	currentSong = songs[1]
 	currentSong.Volume = muted.Value and 0 or 0.1
 	currentSong:Play()
+	print("Now Playing: " .. currentSong.Name)
 
-	-- when it ends, move it to playedSongs and play the next one
+	-- When it ends, move it to playedSongs and play the next one
 	endedConnection = currentSong.Ended:Connect(function()
 		table.insert(playedSongs, currentSong)
 		table.remove(songs, 1)
@@ -57,8 +66,10 @@ local function playSong()
 	end)
 end
 
+-- Start initial playback
 playSong()
 
+-- Toggle mute state and update button icon + volume
 muteButton.MouseButton1Click:Connect(function()
 	muted.Value = not muted.Value
 
