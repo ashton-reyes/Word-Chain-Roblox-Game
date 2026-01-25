@@ -1,185 +1,266 @@
 local MediumLists = {
 	ListNames = {
-		"Market",
-		"Forest",
-		"Castle",
-		"Ocean",
-		"Desert",
-		"Airport",
-		"Kitchen",
-		"Library",
-		"Harbor",
-		"Village",
-		"Mountain",
-		"Hospital",
-		"Theater",
-		"Farm",
-		"Office",
-		"Factory",
-		"Stadium",
-		"Museum",
-		"Galaxy",
-		"Subway",
+		"Sun",
+		"Fire",
+		"Snow",
+		"Rain",
+		"Water",
+		"Book",
+		"Moon",
+		"Air",
+		"Wall",
+		"Head",
+		"Time",
+		"Back",
+		"High",
+		"Out",
+		"Down",
+		"Over",
+		"Under",
+		"Sweet",
+		"Hard",
+		"Soft",
+		"Wind",
+		"Flash",
+		"Grand",
+		"Rock",
+		"Game",
+		"News",
+		"Class",
+		"Road",
+		"Power",
 	},
 
-	Market = {
-		Order = {"Stall", "Fruit", "Buyer", "Money"},
-		Stall = "S _ _ _ _",
-		Fruit = "F _ _ _ _",
-		Buyer = "B _ _ _ _",
-		Money = "M _ _ _ _",
+	Sun = {
+		Order = {"Flower", "Pot", "Luck", "Out"},
+		Flower = "F _ _ _ _ _",
+		Pot = "P _ _",
+		Luck = "L _ _ _",
+		Out = "O _ _"
 	},
 
-	Forest = {
-		Order = {"Trail", "River", "Stone", "Bridge"},
-		Trail = "T _ _ _ _",
-		River = "R _ _ _ _",
-		Stone = "S _ _ _ _",
-		Bridge = "B _ _ _ _ _",
-	},
-
-	Castle = {
-		Order = {"Tower", "Guard", "Shield", "Sword"},
-		Tower = "T _ _ _ _",
-		Guard = "G _ _ _ _",
-		Shield = "S _ _ _ _ _",
-		Sword = "S _ _ _ _",
-	},
-
-	Ocean = {
-		Order = {"Wave", "Shell", "Beach", "Towel"},
-		Wave = "W _ _ _",
-		Shell = "S _ _ _ _",
-		Beach = "B _ _ _ _",
-		Towel = "T _ _ _ _",
-	},
-
-	Desert = {
-		Order = {"Dune", "Camel", "Water", "Oasis"},
-		Dune = "D _ _ _",
-		Camel = "C _ _ _ _",
-		Water = "W _ _ _ _",
-		Oasis = "O _ _ _ _",
-	},
-
-	Airport = {
-		Order = {"Runway", "Plane", "Pilot", "Ticket"},
-		Runway = "R _ _ _ _ _",
-		Plane = "P _ _ _ _",
-		Pilot = "P _ _ _ _",
-		Ticket = "T _ _ _ _ _",
-	},
-
-	Kitchen = {
-		Order = {"Stove", "Pan", "Bread", "Toast"},
-		Stove = "S _ _ _ _",
-		Pan = "P _ _",
-		Bread = "B _ _ _ _",
-		Toast = "T _ _ _ _",
-	},
-
-	Library = {
-		Order = {"Shelf", "Book", "Page", "Story"},
-		Shelf = "S _ _ _ _",
-		Book = "B _ _ _",
-		Page = "P _ _ _",
-		Story = "S _ _ _ _",
-	},
-
-	Harbor = {
-		Order = {"Dock", "Boat", "Rope", "Anchor"},
-		Dock = "D _ _ _",
-		Boat = "B _ _ _",
-		Rope = "R _ _ _",
-		Anchor = "A _ _ _ _ _",
-	},
-
-	Village = {
-		Order = {"Street", "Lamp", "Door", "Chair"},
-		Street = "S _ _ _ _ _",
-		Lamp = "L _ _ _",
-		Door = "D _ _ _",
-		Chair = "C _ _ _ _",
-	},
-
-	Mountain = {
-		Order = {"Cliff", "Rock", "Trail", "Summit"},
-		Cliff = "C _ _ _ _",
-		Rock = "R _ _ _",
-		Trail = "T _ _ _ _",
-		Summit = "S _ _ _ _ _",
-	},
-
-	Hospital = {
-		Order = {"Nurse", "Bed", "Chart", "Cure"},
-		Nurse = "N _ _ _ _",
-		Bed = "B _ _",
-		Chart = "C _ _ _ _",
-		Cure = "C _ _ _",
-	},
-
-	Theater = {
-		Order = {"Stage", "Actor", "Scene", "Applause"},
-		Stage = "S _ _ _ _",
-		Actor = "A _ _ _ _",
-		Scene = "S _ _ _ _",
-		Applause = "A _ _ _ _ _ _ _",
-	},
-
-	Farm = {
-		Order = {"Field", "Wheat", "Bread", "Meal"},
-		Field = "F _ _ _ _",
-		Wheat = "W _ _ _ _",
-		Bread = "B _ _ _ _",
-		Meal = "M _ _ _",
-	},
-
-	Office = {
-		Order = {"Desk", "Paper", "File", "Folder"},
-		Desk = "D _ _ _",
-		Paper = "P _ _ _ _",
-		File = "F _ _ _",
-		Folder = "F _ _ _ _ _",
-	},
-
-	Factory = {
-		Order = {"Machine", "Gear", "Metal", "Product"},
-		Machine = "M _ _ _ _ _ _",
-		Gear = "G _ _ _",
-		Metal = "M _ _ _ _",
-		Product = "P _ _ _ _ _ _",
-	},
-
-	Stadium = {
-		Order = {"Seat", "Crowd", "Cheer", "Trophy"},
+	Fire = {
+		Order = {"Truck", "Driver", "Seat", "Belt"},
+		Truck = "T _ _ _ _",
+		Driver = "D _ _ _ _ _",
 		Seat = "S _ _ _",
-		Crowd = "C _ _ _ _",
-		Cheer = "C _ _ _ _",
-		Trophy = "T _ _ _ _ _",
+		Belt = "B _ _ _"
 	},
 
-	Museum = {
-		Order = {"Hall", "Frame", "Painting", "Artist"},
-		Hall = "H _ _ _",
-		Frame = "F _ _ _ _",
-		Painting = "P _ _ _ _ _ _ _",
-		Artist = "A _ _ _ _ _",
+	Snow = {
+		Order = {"Storm", "Cloud", "Cover", "Letter"},
+		Storm = "S _ _ _ _",
+		Cloud = "C _ _ _ _",
+		Cover = "C _ _ _ _",
+		Letter = "L _ _ _ _ _"
 	},
 
-	Galaxy = {
-		Order = {"Star", "Planet", "Moon", "Orbit"},
-		Star = "S _ _ _",
-		Planet = "P _ _ _ _ _",
-		Moon = "M _ _ _",
-		Orbit = "O _ _ _ _",
+	Rain = {
+		Order = {"Drop", "Ship", "Yard", "Sale"},
+		Drop = "D _ _ _",
+		Ship = "S _ _ _",
+		Yard = "Y _ _ _",
+		Sale = "S _ _ _"
 	},
 
-	Subway = {
-		Order = {"Tunnel", "Train", "Door", "Station"},
-		Tunnel = "T _ _ _ _ _",
-		Train = "T _ _ _ _",
+	Water = {
+		Order = {"Fall", "Back", "Door", "Step"},
+		Fall = "F _ _ _",
+		Back = "B _ _ _",
 		Door = "D _ _ _",
-		Station = "S _ _ _ _ _ _",
+		Step = "S _ _ _"
+	},
+
+	Book = {
+		Order = {"Mark", "Down", "Load", "Time"},
+		Mark = "M _ _ _",
+		Down = "D _ _ _",
+		Load = "L _ _ _",
+		Time = "T _ _ _"
+	},
+
+	Moon = {
+		Order = {"Beam", "Line", "Drive", "Way"},
+		Beam = "B _ _ _",
+		Line = "L _ _ _",
+		Drive = "D _ _ _ _",
+		Way = "W _ _"
+	},
+
+	Air = {
+		Order = {"Line", "Up", "Side", "Walk"},
+		Line = "L _ _ _",
+		Up = "U _",
+		Side = "S _ _ _",
+		Walk = "W _ _ _"
+	},
+
+	Wall = {
+		Order = {"Flower", "Bed", "Time", "Out"},
+		Flower = "F _ _ _ _ _",
+		Bed = "B _ _",
+		Time = "T _ _ _",
+		Out = "O _ _"
+	},
+
+	Head = {
+		Order = {"Band", "Stand", "Off", "Shore"},
+		Band = "B _ _ _",
+		Stand = "S _ _ _ _",
+		Off = "O _ _",
+		Shore = "S _ _ _ _"
+	},
+
+	Time = {
+		Order = {"Table", "Top", "Hat", "Trick"},
+		Table = "T _ _ _ _",
+		Top = "T _ _",
+		Hat = "H _ _",
+		Trick = "T _ _ _ _"
+	},
+
+	Back = {
+		Order = {"Stage", "Fright", "Night", "Shift"},
+		Stage = "S _ _ _ _",
+		Fright = "F _ _ _ _ _",
+		Night = "N _ _ _ _",
+		Shift = "S _ _ _ _"
+	},
+
+	High = {
+		Order = {"Chair", "Lift", "Off", "Guard"},
+		Chair = "C _ _ _ _",
+		Lift = "L _ _ _",
+		Off = "O _ _",
+		Guard = "G _ _ _ _"
+	},
+
+	Out = {
+		Order = {"Cast", "Iron", "Clad", "Armor"},
+		Cast = "C _ _ _",
+		Iron = "I _ _ _",
+		Clad = "C _ _ _",
+		Armor = "A _ _ _ _"
+	},
+
+	Down = {
+		Order = {"Pour", "Over", "Head", "Light"},
+		Pour = "P _ _ _",
+		Over = "O _ _ _",
+		Head = "H _ _ _",
+		Light = "L _ _ _ _"
+	},
+
+	Over = {
+		Order = {"Board", "Walk", "Through", "Pass"},
+		Board = "B _ _ _ _",
+		Walk = "W _ _ _",
+		Through = "T _ _ _ _ _ _",
+		Pass = "P _ _ _"
+	},
+
+	Under = {
+		Order = {"Water", "Proof", "Read", "Out"},
+		Water = "W _ _ _ _",
+		Proof = "P _ _ _ _",
+		Read = "R _ _ _",
+		Out = "O _ _"
+	},
+
+	Sweet = {
+		Order = {"Heart", "Beat", "Box", "Spring"},
+		Heart = "H _ _ _ _",
+		Beat = "B _ _ _",
+		Box = "B _ _",
+		Spring = "S _ _ _ _ _"
+	},
+
+	Hard = {
+		Order = {"Cover", "Up", "Link", "Chain"},
+		Cover = "C _ _ _ _",
+		Up = "U _",
+		Link = "L _ _ _",
+		Chain = "C _ _ _ _"
+	},
+
+	Soft = {
+		Order = {"Ball", "Game", "Plan", "Ahead"},
+		Ball = "B _ _ _",
+		Game = "G _ _ _",
+		Plan = "P _ _ _",
+		Ahead = "A _ _ _ _"
+	},
+
+	Wind = {
+		Order = {"Shield", "Maiden", "Name", "Plate"},
+		Shield = "S _ _ _ _ _",
+		Maiden = "M _ _ _ _ _",
+		Name = "N _ _ _",
+		Plate = "P _ _ _ _"
+	},
+
+	Flash = {
+		Order = {"Back", "Ground", "Zero", "Gravity"},
+		Back = "B _ _ _",
+		Ground = "G _ _ _ _ _",
+		Zero = "Z _ _ _",
+		Gravity = "G _ _ _ _ _ _"
+	},
+
+	Grand = {
+		Order = {"Stand", "Point", "Guard", "Rail"},
+		Stand = "S _ _ _ _",
+		Point = "P _ _ _ _",
+		Guard = "G _ _ _ _",
+		Rail = "R _ _ _"
+	},
+
+	Rock = {
+		Order = {"Star", "Dust", "Pan", "Cake"},
+		Star = "S _ _ _",
+		Dust = "D _ _ _",
+		Pan = "P _ _",
+		Cake = "C _ _ _"
+	},
+
+	Game = {
+		Order = {"Over", "Turn", "Table", "Cloth"},
+		Over = "O _ _ _",
+		Turn = "T _ _ _",
+		Table = "T _ _ _ _",
+		Cloth = "C _ _ _ _"
+	},
+
+	News = {
+		Order = {"Stand", "Still", "Birth", "Mark"},
+		Stand = "S _ _ _ _",
+		Still = "S _ _ _ _",
+		Birth = "B _ _ _ _",
+		Mark = "M _ _ _"
+	},
+
+	Class = {
+		Order = {"Mate", "Ship", "Shape", "Shift"},
+		Mate = "M _ _ _",
+		Ship = "S _ _ _",
+		Shape = "S _ _ _ _",
+		Shift = "S _ _ _ _"
+	},
+
+	Road = {
+		Order = {"Block", "Head", "Band", "Width"},
+		Block = "B _ _ _ _",
+		Head = "H _ _ _",
+		Band = "B _ _ _",
+		Width = "W _ _ _ _"
+	},
+
+	Power = {
+		Order = {"House", "Keeper", "Ring", "Tone"},
+		House = "H _ _ _ _",
+		Keeper = "K _ _ _ _ _",
+		Ring = "R _ _ _",
+		Tone = "T _ _ _"
 	},
 }
 

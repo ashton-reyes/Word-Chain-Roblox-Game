@@ -18,6 +18,12 @@ local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local stageNum = player:WaitForChild("StageNum")
 
+-- GUI
+local playerGui = player:WaitForChild("PlayerGui")
+local mainGui = playerGui:WaitForChild("MainGui")
+local frame = mainGui:WaitForChild("Frame")
+local hintButton = frame:WaitForChild("HintButton")
+
 -- Folders
 local modulesFolder = ReplicatedStorage:WaitForChild("Modules")
 local bindablesFolder = ReplicatedStorage:WaitForChild("Bindables")
@@ -215,11 +221,14 @@ end)
 
 -- When a word is answered correctly, unlock matching walls and refresh
 answeredCorrectly.OnClientEvent:Connect(function(guess)
+	local stageType = player:WaitForChild("StageType")
 	for _, wall in ipairs(wordWalls) do
 		local answer = wall:WaitForChild("Answer")
-		if answer.Value == string.lower(guess) then
+		local type = wall:WaitForChild("Type")
+		if answer.Value == string.lower(guess) and type.Value == stageType.Value then
 			wall.CanCollide = false
 			wall.Transparency = 0.5
+			hintButton.Interactable = false
 		end
 	end
 

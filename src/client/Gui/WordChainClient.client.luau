@@ -33,6 +33,7 @@ local types = stageTypes.Stages
 
 -- Player GUI
 local player = game.Players.LocalPlayer
+local sfx = player:WaitForChild("SFX")
 local playerGui = player:WaitForChild("PlayerGui")
 local wordsGui = playerGui:WaitForChild("WordsGui")
 local wordsLabel = wordsGui:WaitForChild("WordsLabel")
@@ -81,7 +82,9 @@ end
 -- When a level starts, update GUI, play sound, and disable start prompts
 startedLevel.OnClientEvent:Connect(function()
 	updateGui()
-	teleportSound:Play()
+	if sfx.Value then
+		teleportSound:Play()
+	end
 	stageNum.Value = 1
 	wordsLabel.Visible = true
 
@@ -92,7 +95,9 @@ end)
 
 -- When a level finishes, reset walls and re-enable prompts
 finishedLevel.OnClientInvoke = function()
-	finishedLevelSound:Play()
+	if sfx.Value then
+		finishedLevelSound:Play()
+	end
 	resetWordWalls:Fire()
 	resetStageWalls:Fire()
 	stageNum.Value = 0
@@ -107,8 +112,9 @@ end
 
 -- When a correct answer is submitted, reveal that word in the list and update walls
 updateWordsGui.OnClientEvent:Connect(function(guess)
-	correctAnswerSound:Play()
-
+	if sfx.Value then
+		correctAnswerSound:Play()
+	end
 	local currentStageType = player:WaitForChild("StageType")
 	local typeName = types[currentStageType.Value]
 	local listModule = require(modulesFolder[typeName])
@@ -157,7 +163,9 @@ hintActivated.Event:Connect(function()
 	updateWordWalls:Fire() -- WordWallsClient
 
 	if finished then
-		correctAnswerSound:Play()
+		if sfx.Value then
+			correctAnswerSound:Play()
+		end
 		hintFinished:Fire()
 		hintButton.Interactable = false
 	end
@@ -166,4 +174,12 @@ end)
 -- Reset hint index whenever the stage changes
 stageNum.Changed:Connect(function()
 	hintIndex.Value = 2
+	local currentStageType = player:WaitForChild("StageType")
+	if currentStageType.Value == 1 and stageNum.Value == 4 then
+		hintButton.Interactable = false
+	elseif currentStageType.Value == 2 and stageNum.Value == 5 then
+		hintButton.Interactable = false
+	elseif currentStageType.Value == 3 and stageNum.Value == 6 then
+		hintButton.Interactable = false
+	end
 end)

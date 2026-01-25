@@ -13,6 +13,8 @@ local TweenService = game:GetService("TweenService")
 -- Local player
 local player = Players.LocalPlayer
 local stageNum = player:WaitForChild("StageNum")
+local stageType = player:WaitForChild("StageType")
+local hintCount = player:WaitForChild("HintCount")
 
 -- Folders
 local bindablesFolder = ReplicatedStorage:WaitForChild("Bindables")
@@ -28,6 +30,10 @@ local frame = mainGui:WaitForChild("Frame")
 -- Buttons
 local hintButton = frame:WaitForChild("HintButton")
 local skipWordButton = frame:WaitForChild("SkipWordButton")
+
+-- Labels
+local hintCountLabel = hintButton:WaitForChild("HintCount")
+local skipCountLabel = skipWordButton:WaitForChild("SkipCount")
 
 -- Fire hint event when the hint button is clicked
 hintButton.MouseButton1Click:Connect(function()
@@ -82,7 +88,17 @@ end)
 stageNum.Changed:Connect(function()
 	if stageNum.Value == 0 then
 		hintButton.Interactable = false
+	elseif stageType.Value == 1 and stageNum.Value == 4 then
+		hintButton.Interactable = false
+	elseif stageType.Value == 2 and stageNum.Value == 5 then
+		hintButton.Interactable = false
+	elseif stageType.Value == 3 and stageNum.Value == 6 then 
+		hintButton.Interactable = false
 	else
 		hintButton.Interactable = true
 	end
+end)
+
+hintCount.Changed:Connect(function()
+	hintCountLabel.Text = hintCount.Value
 end)
