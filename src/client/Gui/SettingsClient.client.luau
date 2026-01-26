@@ -3,6 +3,7 @@
 local Players = game:GetService("Players")
 local SoundService = game:GetService("SoundService")
 local TweenService = game:GetService("TweenService")
+local Lighting = game:GetService("Lighting")
 
 -- Folders
 local backgroundMusicFolder = SoundService:WaitForChild("BackgroundMusic")
@@ -143,7 +144,7 @@ sfxButton.MouseButton1Click:Connect(function()
 	end
 end)
 
--- TODO: Finish later
+-- TODO: It seems like everything in influenced by light so when its night, everything isn't as visible
 dayButton.MouseButton1Click:Connect(function()
 	dayOn.Value = not dayOn.Value
 	if sfx.Value then
@@ -152,8 +153,10 @@ dayButton.MouseButton1Click:Connect(function()
 	if not dayOn.Value then
 		dayButton.BackgroundColor3 = Color3.fromRGB(255, 0 ,0)
 		dayButton.Text = "OFF"
+		Lighting.TimeOfDay = "21:00:00"
 	else
 		dayButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
 		dayButton.Text = "ON"
+		Lighting.TimeOfDay = "14:30:00"
 	end
 end)
