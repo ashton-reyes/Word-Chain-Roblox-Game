@@ -11,6 +11,10 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- Folders
 local modulesFolder = ReplicatedStorage:WaitForChild("Modules")
+local remotesFolder = ReplicatedStorage:WaitForChild("Remotes")
+
+-- Remotes
+local startTutorial = remotesFolder:WaitForChild("StartTutorial")
 
 -- LocalPlayer (only valid in a LocalScript; unused here but kept for reference)
 local player = Players.LocalPlayer
@@ -29,12 +33,12 @@ end
 
 -- Set up stats and values when a player joins
 Players.PlayerAdded:Connect(function(player)
-	
 	player.CharacterAdded:Connect(setupCharacter)
 	
 	if player.Character then
 		setupCharacter(player.Character)
 	end
+	
 	-- Leaderstats folder (for Roblox leaderboard UI)
 	local leaderstats = Instance.new("Folder", player)
 	leaderstats.Name = "leaderstats"
@@ -205,4 +209,6 @@ Players.PlayerAdded:Connect(function(player)
             end)
         end
     ]]
+	task.wait(3)
+	startTutorial:FireClient(player)
 end)
