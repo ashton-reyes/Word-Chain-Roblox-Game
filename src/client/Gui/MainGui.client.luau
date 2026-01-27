@@ -43,11 +43,13 @@ local skipCountLabel = skipWordButton:WaitForChild("SkipCount")
 -- TODO check if their hintcount > 0 and decrement by 1
 hintButton.MouseButton1Click:Connect(function()
 	hintActivated:Fire() -- WordChainClient
+	hintCount.Value -= 1
 end)
 
 -- TODO check if their skipcount > 0 and decrement by 1
 skipWordButton.MouseButton1Click:Connect(function()
 	skipActivated:FireServer()
+	skipCount.Value -= 1
 end)
 
 -- Cache original sizes for hover tweens
