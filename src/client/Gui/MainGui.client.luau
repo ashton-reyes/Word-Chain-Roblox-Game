@@ -15,6 +15,7 @@ local player = Players.LocalPlayer
 local stageNum = player:WaitForChild("StageNum")
 local stageType = player:WaitForChild("StageType")
 local hintCount = player:WaitForChild("HintCount")
+local skipCount = player:WaitForChild("SkipCount")
 
 -- Folders
 local bindablesFolder = ReplicatedStorage:WaitForChild("Bindables")
@@ -113,6 +114,14 @@ stageNum.Changed:Connect(function()
 	end
 end)
 
+hintCountLabel.Text = hintCount.Value
+skipCountLabel.Text = skipCount.Value
+
 hintCount.Changed:Connect(function()
 	hintCountLabel.Text = hintCount.Value
 end)
+
+skipCount.Changed:Connect(function()
+	skipCountLabel.Text = skipCount.Value
+end)
+
