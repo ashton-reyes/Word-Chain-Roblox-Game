@@ -52,6 +52,10 @@ Players.PlayerAdded:Connect(function(player)
 	hintCount.Name = "HintCount"
 	hintCount.Value = 0
 	
+	local skipCount = Instance.new("IntValue", player)
+	skipCount.Name = "SkipCount"
+	skipCount.Value = 0
+	
 	local sfx = Instance.new("BoolValue", player)
 	sfx.Name = "SFX"
 	sfx.Value = true
@@ -133,45 +137,13 @@ Players.PlayerAdded:Connect(function(player)
 	end
 	
 	
-	--[[
-	
-	local mediumListsValue = Instance.new("StringValue", player)
-	mediumListsValue.Name = "MediumLists"
-	local success, currentMediumLists = pcall(function()
-		return PlayerMediumLists:GetAsync(player.UserId)
-	end)
-	if success and currentMediumLists ~= nil then
-		mediumListsValue.Value = currentMediumLists
-	else
-		mediumListsValue.Value = "Market"
-		pcall(function()
-			PlayerMediumLists:SetAsync(player.UserId, "Market")
-		end)
-	end
-	
-
-	local hardListsValue = Instance.new("StringValue", player)
-	hardListsValue.Name = "HardLists"
-	local success, currentHardLists = pcall(function()
-		return PlayerHardLists:GetAsync(player.UserId)
-	end)
-	if success and currentHardLists ~= nil then
-		hardListsValue.Value = currentHardLists
-	else
-		hardListsValue.Value = "Laboratory"
-		pcall(function()
-			PlayerHardLists:SetAsync(player.UserId, "Laboratory")
-		end)
-	end
-	]]
-	--[[
-	
+	--[[ Resetting Data Stores
 	PlayerEasyLists:RemoveAsync(player.UserId)
 	PlayerMediumLists:RemoveAsync(player.UserId)
 	PlayerHardLists:RemoveAsync(player.UserId)
 	PlayerEasyLists:SetAsync(player.UserId, "Peanut")
-	PlayerMediumLists:SetAsync(player.UserId, "Market")
-	PlayerHardLists:SetAsync(player.UserId, "Laboratory")=
+	PlayerMediumLists:SetAsync(player.UserId, "Sun")
+	PlayerHardLists:SetAsync(player.UserId, "Fire")=
 	]]
 	local success, currentEasyLists = pcall(function()
 		return PlayerEasyLists:GetAsync(player.UserId)
