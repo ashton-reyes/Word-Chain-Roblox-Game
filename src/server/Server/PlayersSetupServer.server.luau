@@ -90,19 +90,49 @@ Players.PlayerAdded:Connect(function(player)
 
 	
 
-	local easyListsValue = Instance.new("StringValue",player)
-	easyListsValue.Name = "EasyLists"
+	local easyLists = Instance.new("StringValue",player)
+	easyLists.Name = "EasyLists"
 	local success, currentEasyLists = pcall(function()
 		return PlayerEasyLists:GetAsync(player.UserId)
 	end)
 	if success and currentEasyLists ~= nil then
-		easyListsValue.Value = currentEasyLists
+		easyLists.Value = currentEasyLists
 	else
-		easyListsValue.Value = "Peanut"
+		easyLists.Value = "Peanut"
 		pcall(function()
 			PlayerEasyLists:SetAsync(player.UserId, "Peanut")
 		end)
 	end
+	
+	local mediumLists = Instance.new("StringValue", player)
+	mediumLists.Name = "MediumLists"
+	local success, currentMediumLists = pcall(function()
+		return PlayerMediumLists:GetAsync(player.UserId)
+	end)
+	if success and currentMediumLists ~= nil then
+		mediumLists.Value = currentMediumLists
+	else
+		mediumLists.Value = "Sun"
+		pcall(function()
+			PlayerMediumLists:SetAsync(player.UserId, "Sun")
+		end)
+	end
+	
+	local hardLists = Instance.new("StringValue", player)
+	hardLists.Name = "HardLists"
+	local success, currentHardLists = pcall(function()
+		return PlayerHardLists:GetAsync(player.UserId)
+	end)
+	if success and currentHardLists ~= nil then
+		hardLists.Value = currentHardLists
+	else
+		hardLists.Value = "Fire"
+		pcall(function()
+			PlayerHardLists:SetAsync(player.UserId, "Fire")
+		end)
+	end
+	
+	
 	--[[
 	
 	local mediumListsValue = Instance.new("StringValue", player)
@@ -209,6 +239,10 @@ Players.PlayerAdded:Connect(function(player)
             end)
         end
     ]]
-	task.wait(3)
+	task.wait(1)
 	startTutorial:FireClient(player)
+	
+	task.spawn(function()
+		
+	end)
 end)
