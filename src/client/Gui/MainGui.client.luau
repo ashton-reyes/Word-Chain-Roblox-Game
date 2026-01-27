@@ -18,9 +18,12 @@ local hintCount = player:WaitForChild("HintCount")
 
 -- Folders
 local bindablesFolder = ReplicatedStorage:WaitForChild("Bindables")
+local remotesFolder = ReplicatedStorage:WaitForChild("Remotes")
 
--- Bindables
+-- Bindables / remotes
 local hintActivated = bindablesFolder:WaitForChild("HintActivated")
+local skipActivated = remotesFolder:WaitForChild("SkipActivated")
+
 
 -- GUI references
 local playerGui = player:WaitForChild("PlayerGui")
@@ -36,8 +39,14 @@ local hintCountLabel = hintButton:WaitForChild("HintCount")
 local skipCountLabel = skipWordButton:WaitForChild("SkipCount")
 
 -- Fire hint event when the hint button is clicked
+-- TODO check if their hintcount > 0 and decrement by 1
 hintButton.MouseButton1Click:Connect(function()
 	hintActivated:Fire() -- WordChainClient
+end)
+
+-- TODO check if their skipcount > 0 and decrement by 1
+skipWordButton.MouseButton1Click:Connect(function()
+	skipActivated:FireServer()
 end)
 
 -- Cache original sizes for hover tweens
@@ -88,14 +97,19 @@ end)
 stageNum.Changed:Connect(function()
 	if stageNum.Value == 0 then
 		hintButton.Interactable = false
+		skipWordButton.Interactable = false
 	elseif stageType.Value == 1 and stageNum.Value == 4 then
 		hintButton.Interactable = false
+		skipWordButton.Interactable = false
 	elseif stageType.Value == 2 and stageNum.Value == 5 then
 		hintButton.Interactable = false
+		skipWordButton.Interactable = false
 	elseif stageType.Value == 3 and stageNum.Value == 6 then 
 		hintButton.Interactable = false
+		skipWordButton.Interactable = false
 	else
 		hintButton.Interactable = true
+		skipWordButton.Interactable = true
 	end
 end)
 
