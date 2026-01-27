@@ -9,9 +9,11 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
+local SoundService = game:GetService("SoundService")
 
 -- Local player
 local player = Players.LocalPlayer
+local sfx = player:WaitForChild("SFX")
 local stageNum = player:WaitForChild("StageNum")
 local stageType = player:WaitForChild("StageType")
 local hintCount = player:WaitForChild("HintCount")
@@ -20,10 +22,15 @@ local skipCount = player:WaitForChild("SkipCount")
 -- Folders
 local bindablesFolder = ReplicatedStorage:WaitForChild("Bindables")
 local remotesFolder = ReplicatedStorage:WaitForChild("Remotes")
+local soundEffectsFolder = SoundService:WaitForChild("SoundEffects")
 
 -- Bindables / remotes
 local hintActivated = bindablesFolder:WaitForChild("HintActivated")
 local skipActivated = remotesFolder:WaitForChild("SkipActivated")
+
+-- TODO: maybe a new click sfx
+-- SFX 
+local click1 = soundEffectsFolder:WaitForChild("Click1")
 
 
 -- GUI references
@@ -40,16 +47,31 @@ local hintCountLabel = hintButton:WaitForChild("HintCount")
 local skipCountLabel = skipWordButton:WaitForChild("SkipCount")
 
 -- Fire hint event when the hint button is clicked
--- TODO check if their hintcount > 0 and decrement by 1
 hintButton.MouseButton1Click:Connect(function()
-	hintActivated:Fire() -- WordChainClient
-	hintCount.Value -= 1
+	if sfx.Value then
+		click1:Play()
+	end
+	if hintCount.Value > 0 then
+		hintActivated:Fire() -- WordChainClient
+		hintCount.Value -= 1
+	else
+		-- TODO: dev pass
+	end
+	
 end)
 
--- TODO check if their skipcount > 0 and decrement by 1
+-- FIre skip event when skip button is clicked
 skipWordButton.MouseButton1Click:Connect(function()
-	skipActivated:FireServer()
-	skipCount.Value -= 1
+	if sfx.Value then
+		click1:Play()
+	end
+	if skipCount.Value > 0 then
+		skipActivated:FireServer() -- PromptsServer
+		skipCount.Value -= 1
+	else
+		-- TODO: dev pass
+	end
+	
 end)
 
 -- Cache original sizes for hover tweens
