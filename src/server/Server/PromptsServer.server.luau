@@ -41,8 +41,6 @@ local PlayerEasyLists = DataStoreService:GetDataStore("PlayerEasyLists")
 local PlayerMediumLists = DataStoreService:GetDataStore("PlayerMediumLists")
 local PlayerHardLists = DataStoreService:GetDataStore("PlayerHardLists")
 
--- Cache
-local easyListsCache = {}
 
 -- Connect prompts on all start walls
 for _, wall in ipairs(startWalls) do
@@ -97,25 +95,30 @@ local function finishedStage(player)
 	local listModule = require(modulesFolder[typeName])
 	local words = listModule.ListNames
 
-
+	-- TODO: completed
 	-- Advance to the next word in the list
 	for i, word in ipairs(words) do
 		if word == startWord.Value then
-			startWord.Value = words[i + 1]
-			if stageType.Value == 1 then -- in easy stage
-				local success, newEasyLists = pcall(function()
-					PlayerEasyLists:SetAsync(player.UserId, startWord.Value)
-				end)
-			elseif stageType.Value == 2 then -- in medium stge
-				local success, newMediumLists = pcall(function()
-					PlayerMediumLists:SetAsync(player.UserId, startWord.Value)
-				end)
-			elseif stageType.Value == 3 then -- in hard stage
-				local success, newHardLists = pcall(function()
-					PlayerHardLists:SetAsync(player.UserId, startWord.Value)
-				end)
+			if startWord.Value == "Completed" then
+				print(true)
+				break
+			else
+				startWord.Value = words[i + 1]
+				if stageType.Value == 1 then -- in easy stage
+					local success, newEasyLists = pcall(function()
+						PlayerEasyLists:SetAsync(player.UserId, startWord.Value)
+					end)
+				elseif stageType.Value == 2 then -- in medium stge
+					local success, newMediumLists = pcall(function()
+						PlayerMediumLists:SetAsync(player.UserId, startWord.Value)
+					end)
+				elseif stageType.Value == 3 then -- in hard stage
+					local success, newHardLists = pcall(function()
+						PlayerHardLists:SetAsync(player.UserId, startWord.Value)
+					end)
+				end
+				break
 			end
-			break
 		end
 	end
 
@@ -149,3 +152,5 @@ for _, wall in ipairs(endWalls) do
 		finishedStage(player)
 	end)
 end
+
+
