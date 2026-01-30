@@ -36,6 +36,7 @@ local types = stageTypes.Stages
 local easyLists = require(modulesFolder:WaitForChild("EasyLists"))
 local mediumLists = require(modulesFolder:WaitForChild("MediumLists"))
 local hardLists = require(modulesFolder:WaitForChild("HardLists"))
+local tutorialLists = require(modulesFolder:WaitForChild("TutorialLists"))
 
 local answeredCorrectly = remotesFolder:WaitForChild("AnsweredCorrectly")
 local resetWordWalls = bindablesFolder:WaitForChild("ResetWordWalls")
@@ -56,17 +57,21 @@ local function updateStartWall(wall)
 
 	local gui = wall:WaitForChild("SurfaceGui")
 	local label = gui:WaitForChild("TextLabel")
+	
+	if startWord.Value == "Completed" then
+		label.Text = startWord.Value
+	else
+		-- First line is the starting word
+		label.Text = startWord.Value .. "\n"
 
-	-- First line is the starting word
-	label.Text = startWord.Value .. "\n"
+		-- Then append all clues/definitions in the configured order
+		for _, key in ipairs(words.Order) do
+			label.Text = label.Text .. words[key] .. "\n"
+		end
 
-	-- Then append all clues/definitions in the configured order
-	for _, key in ipairs(words.Order) do
-		label.Text = label.Text .. words[key] .. "\n"
+		-- Remove trailing newline
+		label.Text = label.Text:gsub("\n$", "")
 	end
-
-	-- Remove trailing newline
-	label.Text = label.Text:gsub("\n$", "")
 end
 
 -- Update a single WordWall based on its Type and Order
@@ -79,91 +84,168 @@ local function updateWordWall(wall)
 	-- Type 1 = Easy
 	if typeValue.Value == 1 then
 		local startWord = player:WaitForChild("EasyLists")
-		local words = easyLists[startWord.Value]
-		local values = {}
-		local keys = {}
+		
+		if startWord.Value == "Completed" then
+			if order.Value == 1 then
+				label.Text = ""
+			elseif order.Value == 2 then
+				label.Text = ""
+			elseif order.Value == 3 then
+				label.Text = ""
+			end
+		else
+			local words = easyLists[startWord.Value]
+			local values = {}
+			local keys = {}
 
-		for i, key in ipairs(words.Order) do
-			values[i] = words[key]
-			keys[i] = key
+			for i, key in ipairs(words.Order) do
+				values[i] = words[key]
+				keys[i] = key
+			end
+
+			if order.Value == 1 then
+				label.Text = startWord.Value .. "\n" .. values[1]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[1])
+			elseif order.Value == 2 then
+				label.Text = values[1] .. "\n" .. values[2]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[2])
+			elseif order.Value == 3 then
+				label.Text = values[2] .. "\n" .. values[3]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[3])
+			end
 		end
-
-		if order.Value == 1 then
-			label.Text = startWord.Value .. "\n" .. values[1]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[1])
-		elseif order.Value == 2 then
-			label.Text = values[1] .. "\n" .. values[2]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[2])
-		elseif order.Value == 3 then
-			label.Text = values[2] .. "\n" .. values[3]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[3])
-		end
-
+		
 		-- Type 2 = Medium
 	elseif typeValue.Value == 2 then
 		local startWord = player:WaitForChild("MediumLists")
-		local words = mediumLists[startWord.Value]
-		local values = {}
-		local keys = {}
+		
+		if startWord.Value == "Completed" then
+			if order.Value == 1 then
+				label.Text = ""
+			elseif order.Value == 2 then
+				label.Text = ""
+			elseif order.Value == 3 then
+				label.Text = ""
+			elseif order.Value == 4 then
+				label.Text = ""
+			end
+		else
+			local words = mediumLists[startWord.Value]
+			local values = {}
+			local keys = {}
 
-		for i, key in ipairs(words.Order) do
-			values[i] = words[key]
-			keys[i] = key
-		end
+			for i, key in ipairs(words.Order) do
+				values[i] = words[key]
+				keys[i] = key
+			end
 
-		if order.Value == 1 then
-			label.Text = startWord.Value .. "\n" .. values[1]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[1])
-		elseif order.Value == 2 then
-			label.Text = values[1] .. "\n" .. values[2]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[2])
-		elseif order.Value == 3 then
-			label.Text = values[2] .. "\n" .. values[3]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[3])
-		elseif order.Value == 4 then
-			label.Text = values[3] .. "\n" .. values[4]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[4])
+			if order.Value == 1 then
+				label.Text = startWord.Value .. "\n" .. values[1]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[1])
+			elseif order.Value == 2 then
+				label.Text = values[1] .. "\n" .. values[2]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[2])
+			elseif order.Value == 3 then
+				label.Text = values[2] .. "\n" .. values[3]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[3])
+			elseif order.Value == 4 then
+				label.Text = values[3] .. "\n" .. values[4]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[4])
+			end
 		end
+		
+
 
 		-- Type 3 = Hard
 	elseif typeValue.Value == 3 then
 		local startWord = player:WaitForChild("HardLists")
-		local words = hardLists[startWord.Value]
-		local values = {}
-		local keys = {}
+		
+		if startWord.Value == "Completed" then
+			if order.Value == 1 then
+				label.Text = ""
+			elseif order.Value == 2 then
+				label.Text = ""
+			elseif order.Value == 3 then
+				label.Text = ""
+			elseif order.Value == 4 then
+				label.Text = ""
+			elseif order.Value == 5 then
+				label.Text = ""
+			end
+		else
+			local words = hardLists[startWord.Value]
+			local values = {}
+			local keys = {}
 
-		for i, key in ipairs(words.Order) do
-			values[i] = words[key]
-			keys[i] = key
+			for i, key in ipairs(words.Order) do
+				values[i] = words[key]
+				keys[i] = key
+			end
+
+			if order.Value == 1 then
+				label.Text = startWord.Value .. "\n" .. values[1]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[1])
+			elseif order.Value == 2 then
+				label.Text = values[1] .. "\n" .. values[2]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[2])
+			elseif order.Value == 3 then
+				label.Text = values[2] .. "\n" .. values[3]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[3])
+			elseif order.Value == 4 then
+				label.Text = values[3] .. "\n" .. values[4]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[4])
+			elseif order.Value == 5 then
+				label.Text = values[4] .. "\n" .. values[5]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[5])
+			end
 		end
 
-		if order.Value == 1 then
-			label.Text = startWord.Value .. "\n" .. values[1]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[1])
-		elseif order.Value == 2 then
-			label.Text = values[1] .. "\n" .. values[2]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[2])
-		elseif order.Value == 3 then
-			label.Text = values[2] .. "\n" .. values[3]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[3])
-		elseif order.Value == 4 then
-			label.Text = values[3] .. "\n" .. values[4]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[4])
-		elseif order.Value == 5 then
-			label.Text = values[4] .. "\n" .. values[5]
-			local answer = wall:WaitForChild("Answer")
-			answer.Value = string.lower(keys[5])
+	elseif typeValue.Value == 4 then
+		local startWord = player:WaitForChild("TutorialLists")
+		
+		if startWord.Value == "Completed" then
+			if order.Value == 1 then
+				label.Text = ""
+			elseif order.Value == 2 then
+				label.Text = ""
+			elseif order.Value == 3 then
+				label.Text = ""
+			elseif order.Value == 4 then
+				label.Text = ""
+			elseif order.Value == 5 then
+				label.Text = ""
+			end
+		else
+			local words = tutorialLists[startWord.Value]
+			local values = {}
+			local keys = {}
+
+			for i, key in ipairs(words.Order) do
+				values[i] = words[key]
+				keys[i] = key
+			end
+
+			if order.Value == 1 then
+				label.Text = startWord.Value .. "\n" .. values[1]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[1])
+			elseif order.Value == 2 then
+				label.Text = values[1] .. "\n" .. values[2]
+				local answer = wall:WaitForChild("Answer")
+				answer.Value = string.lower(keys[2])
+			end
 		end
 	else
 		error("Unknown Type Found")
