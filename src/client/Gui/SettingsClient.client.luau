@@ -38,13 +38,13 @@ local musicOn = musicButton:WaitForChild("On")
 local sfxOn = sfxButton:WaitForChild("On")
 local dayOn = dayButton:WaitForChild("On")
 
-local originialSize = settingsFrame.Size
+local originalSize = settingsFrame.Size
 settingsButton.MouseButton1Click:Connect(function()
 	settingsFrame.Size = UDim2.new(0, 0, 0 ,0)
 	settingsFrame.Visible = not settingsFrame.Visible
 	local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
 	local propertyTable = {
-		Size = originialSize
+		Size = originalSize
 	}
 	local tween = TweenService:Create(settingsFrame, tweenInfo, propertyTable)
 	tween:Play()
