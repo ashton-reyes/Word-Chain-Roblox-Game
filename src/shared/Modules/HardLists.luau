@@ -31,6 +31,7 @@ local HardLists = {
 		"Low",
 		"Dark",
 		"Bright",
+		"Completed",
 	},
 
 	Fire = {

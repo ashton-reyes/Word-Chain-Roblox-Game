@@ -29,6 +29,7 @@ local MediumLists = {
 		"Class",
 		"Road",
 		"Power",
+		"Completed",
 	},
 
 	Sun = {

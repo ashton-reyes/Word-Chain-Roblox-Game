@@ -38,6 +38,7 @@ local EasyLists = {
 		"Cloud",
 		"Hot",
 		"Ball",
+		"Completed",
 	},
 
 	Peanut = {
