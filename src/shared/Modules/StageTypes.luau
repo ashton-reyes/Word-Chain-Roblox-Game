@@ -1,6 +1,5 @@
 local StageTypes = {
-	Stages = {"EasyLists", "MediumLists", "HardLists"},
-	Player = {"PlayerEasyLists", "PlayerMediumLists", "HardLists"}
+	Stages = {"EasyLists", "MediumLists", "HardLists"}
 }
 
 return StageTypes
