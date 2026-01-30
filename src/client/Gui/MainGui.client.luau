@@ -10,6 +10,11 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local SoundService = game:GetService("SoundService")
+local MarketplaceService = game:GetService("MarketplaceService")
+
+-- Developer Product
+local hintProductId = 3524532544
+local skipProductId = 3524532694
 
 -- Local player
 local player = Players.LocalPlayer
@@ -46,6 +51,25 @@ local skipWordButton = frame:WaitForChild("SkipWordButton")
 local hintCountLabel = hintButton:WaitForChild("HintCount")
 local skipCountLabel = skipWordButton:WaitForChild("SkipCount")
 
+
+local function promptHintProductPurchase()
+	local success, errorMessage = pcall(function()
+		MarketplaceService:PromptProductPurchase(player, hintProductId)
+	end)
+	if success then
+		hintCount.Value += 1
+	else
+		error(errorMessage)
+	end
+end
+
+local function promptSkipProductPurchase()
+	local success, errorMessage = pcall(function()
+		MarketplaceService:PromptProductPurchase(player, skipProductId)
+	end)
+end
+
+
 -- Fire hint event when the hint button is clicked
 hintButton.MouseButton1Click:Connect(function()
 	if sfx.Value then
@@ -55,7 +79,7 @@ hintButton.MouseButton1Click:Connect(function()
 		hintActivated:Fire() -- WordChainClient
 		hintCount.Value -= 1
 	else
-		-- TODO: dev pass
+		promptHintProductPurchase()
 	end
 	
 end)
@@ -68,8 +92,9 @@ skipWordButton.MouseButton1Click:Connect(function()
 	if skipCount.Value > 0 then
 		skipActivated:FireServer() -- PromptsServer
 		skipCount.Value -= 1
+		skipWordButton.Interactable = false
 	else
-		-- TODO: dev pass
+		promptSkipProductPurchase()
 	end
 	
 end)
