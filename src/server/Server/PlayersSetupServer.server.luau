@@ -50,11 +50,11 @@ Players.PlayerAdded:Connect(function(player)
 	
 	local hintCount = Instance.new("IntValue", player)
 	hintCount.Name = "HintCount"
-	hintCount.Value = 0
+	hintCount.Value = 1
 	
 	local skipCount = Instance.new("IntValue", player)
 	skipCount.Name = "SkipCount"
-	skipCount.Value = 0
+	skipCount.Value = 1
 	
 	local sfx = Instance.new("BoolValue", player)
 	sfx.Name = "SFX"
@@ -81,7 +81,7 @@ Players.PlayerAdded:Connect(function(player)
 	
 	local easyListsValue = Instance.new("StringValue", player)
 	easyListsValue.Name = "EasyLists"
-	easyListsValue.Value = "Peanut"
+	easyListsValue.Value = "Sun"
 
 	local mediumListsValue = Instance.new("StringValue", player)
 	mediumListsValue.Name = "MediumLists"
@@ -91,6 +91,9 @@ Players.PlayerAdded:Connect(function(player)
 	hardListsValue.Name = "HardLists"
 	hardListsValue.Value = "Fire"
 
+	local tutorialListsValue = Instance.new("StringValue", player)
+	tutorialListsValue.Name = "TutorialLists"
+	tutorialListsValue.Value = "Peanut"
 
 	
 
@@ -102,9 +105,9 @@ Players.PlayerAdded:Connect(function(player)
 	if success and currentEasyLists ~= nil then
 		easyLists.Value = currentEasyLists
 	else
-		easyLists.Value = "Peanut"
+		easyLists.Value = "Sun"
 		pcall(function()
-			PlayerEasyLists:SetAsync(player.UserId, "Peanut")
+			PlayerEasyLists:SetAsync(player.UserId, "Sun")
 		end)
 	end
 	
@@ -135,6 +138,8 @@ Players.PlayerAdded:Connect(function(player)
 			PlayerHardLists:SetAsync(player.UserId, "Fire")
 		end)
 	end
+	
+	
 	
 	
 	--[[ Resetting Data Stores
