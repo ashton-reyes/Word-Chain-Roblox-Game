@@ -181,5 +181,7 @@ stageNum.Changed:Connect(function()
 		hintButton.Interactable = false
 	elseif currentStageType.Value == 3 and stageNum.Value == 6 then
 		hintButton.Interactable = false
+	elseif currentStageType.Value == 4 and stageNum.Value == 3 then
+		hintButton.Interactable = false
 	end
 end)
