@@ -50,11 +50,11 @@ Players.PlayerAdded:Connect(function(player)
 	
 	local hintCount = Instance.new("IntValue", player)
 	hintCount.Name = "HintCount"
-	hintCount.Value = 1
+	hintCount.Value = 50
 	
 	local skipCount = Instance.new("IntValue", player)
 	skipCount.Name = "SkipCount"
-	skipCount.Value = 1
+	skipCount.Value = 10
 	
 	local sfx = Instance.new("BoolValue", player)
 	sfx.Name = "SFX"
@@ -192,7 +192,7 @@ Players.PlayerAdded:Connect(function(player)
         1 = Easy
         2 = Medium
         3 = Hard
-        4 = Other
+        4 = Tutorial
         Used by other scripts to know which word-chain the player is currently in.
     ]]
 	local stageType = Instance.new("IntValue", player)
