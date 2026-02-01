@@ -46,10 +46,15 @@ local frame = mainGui:WaitForChild("Frame")
 -- Buttons
 local hintButton = frame:WaitForChild("HintButton")
 local skipWordButton = frame:WaitForChild("SkipWordButton")
+local exitButton = mainGui:WaitForChild("ExitButton")
 
 -- Labels
 local hintCountLabel = hintButton:WaitForChild("HintCount")
 local skipCountLabel = skipWordButton:WaitForChild("SkipCount")
+
+-- Words Gui
+local wordsGui = playerGui:WaitForChild("WordsGui")
+local wordsLabel = wordsGui:WaitForChild("WordsLabel")
 
 
 local function promptHintProductPurchase()
@@ -145,7 +150,12 @@ end)
 
 -- Enable/disable hint button based on whether the player is in a stage
 stageNum.Changed:Connect(function()
+	exitButton.Visible = true
 	if stageNum.Value == 0 then
+		hintButton.Interactable = false
+		skipWordButton.Interactable = false
+		exitButton.Visible = false
+	elseif stageType.Value == 4 then
 		hintButton.Interactable = false
 		skipWordButton.Interactable = false
 	elseif stageType.Value == 1 and stageNum.Value == 4 then
@@ -174,3 +184,24 @@ skipCount.Changed:Connect(function()
 	skipCountLabel.Text = skipCount.Value
 end)
 
+exitButton.MouseButton1Click:Connect(function()
+	if sfx.Value then
+		click1:Play()
+	end
+	
+	local character = player.Character
+	if not character then
+		return
+	end
+
+	local humanoid = character:FindFirstChild("Humanoid")
+	local hrp = character:FindFirstChild("HumanoidRootPart")
+	if not humanoid or not hrp then
+		return
+	end
+
+	hrp.CFrame = CFrame.new(workspace.SpawnLocation.Position + Vector3.new(0, 5, 0))
+	stageNum.Value = 0
+	exitButton.Visible = false
+	wordsLabel.Visible = false
+end)
