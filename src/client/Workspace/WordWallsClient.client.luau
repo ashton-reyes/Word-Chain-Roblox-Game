@@ -60,6 +60,8 @@ local function updateStartWall(wall)
 	
 	if startWord.Value == "Completed" then
 		label.Text = startWord.Value
+		local proximityPrompt = wall:WaitForChild("ProximityPrompt")
+		proximityPrompt.Enabled = false
 	else
 		-- First line is the starting word
 		label.Text = startWord.Value .. "\n"
@@ -219,12 +221,6 @@ local function updateWordWall(wall)
 			if order.Value == 1 then
 				label.Text = ""
 			elseif order.Value == 2 then
-				label.Text = ""
-			elseif order.Value == 3 then
-				label.Text = ""
-			elseif order.Value == 4 then
-				label.Text = ""
-			elseif order.Value == 5 then
 				label.Text = ""
 			end
 		else
