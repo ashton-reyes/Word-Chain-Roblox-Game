@@ -32,6 +32,8 @@ local soundEffectsFolder = SoundService:WaitForChild("SoundEffects")
 -- Bindables / remotes
 local hintActivated = bindablesFolder:WaitForChild("HintActivated")
 local skipActivated = remotesFolder:WaitForChild("SkipActivated")
+local decreaseServerHint = remotesFolder:WaitForChild("DecreaseServerHint")
+local decreaseServerSkip = remotesFolder:WaitForChild("DecreaseServerSkip")
 
 -- TODO: maybe a new click sfx
 -- SFX 
@@ -83,6 +85,7 @@ hintButton.MouseButton1Click:Connect(function()
 	if hintCount.Value > 0 then
 		hintActivated:Fire() -- WordChainClient
 		hintCount.Value -= 1
+		decreaseServerHint:FireServer() -- DataServer
 	else
 		promptHintProductPurchase()
 	end
@@ -98,6 +101,7 @@ skipWordButton.MouseButton1Click:Connect(function()
 		skipActivated:FireServer() -- PromptsServer
 		skipCount.Value -= 1
 		skipWordButton.Interactable = false
+		decreaseServerSkip:FireServer()
 	else
 		promptSkipProductPurchase()
 	end
