@@ -1,32 +1,29 @@
--- Service
-local Players = game:GetService("Players")
+-- Services
 local ServerStorage = game:GetService("ServerStorage")
-local DataStoreService = game:GetService("DataStoreService")
-
--- DSS
-local PlayerTitles = DataStoreService:GetDataStore("PlayerTitles")
-
-
--- Folders
-local titlesFolder = ServerStorage:WaitForChild("PlayerTitles")
+local Players = game:GetService("Players")
 
 -- Titles
-local titles = titlesFolder:GetChildren()
+
 
 Players.PlayerAdded:Connect(function(player)
-    local level = player:WaitForChild("leaderstats"):WaitForChild("Level")
+	local function applyTitle(character)
+		local head = character:WaitForChild("Head")
 
+		local titles = ServerStorage:FindFirstChild("Titles")
+		local owner = titles:FindFirstChild("Owner")
+		
+--		print(titles)
+--		print(owner)
+		if owner then
+			local clonedTitle = owner:Clone()
+			clonedTitle.Parent = head
+		end
 
-    local customTitle = Instance.new("BoolValue", player)
-    customTitle.Name = "CustomTitle"
-    local success, storedTitle = pcall(function()  
-        return PlayerTitles:GetAsync(player.UserId)
-    end)
-    if success and storedTitle ~= nil then
-        customTitle.Value = storedTitle
-    else
-        PlayerTitles:SetAsync(player.UserId, false)
-        customTitle.Value = false
-    end
+	end
 
+	if player.Character then
+		applyTitle(player.Character)
+	end
+
+	player.CharacterAdded:Connect(applyTitle)
 end)
